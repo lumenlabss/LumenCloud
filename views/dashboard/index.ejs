@@ -3,10 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <title>Dashboard - LumenCloud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1>Bienvenue dans ton dashboard</h1>
-    <p>Ton user ID : <%= userId %></p>
-    <a href="/logout">Déconnexion</a>
+
+  <%- include('../components/sidebar') %>
+  <body class="bg-gray-900 text-white">
+    <div class="flex-grow p-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+          <h1 class="text-3xl font-bold">Dashboard</h1>
+        </div>
+        <h1>Bienvenue dans ton dashboard</h1>
+        <p>Ton user ID : <%= userId %></p>
+        <a href="/logout">Déconnexion</a>
+      </div>
+    </div>
   </body>
+  <script src="/js/sidebar.js"></script>
 </html>
