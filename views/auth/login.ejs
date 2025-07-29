@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login - LumenCloud</title>
+  </head>
+  <body>
+    <h1>Connexion</h1>
+
+    <% if (error) { %>
+    <p style="color: red"><%= error %></p>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <label>Utilisateur : <input type="text" name="username" required /></label
+      ><br />
+      <label
+        >Mot de passe :
+        <input type="password" name="password" required /></label
+      ><br />
+      <button type="submit">Se connecter</button>
+    </form>
+  </body>
+</html>

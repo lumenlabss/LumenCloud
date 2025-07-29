@@ -1,0 +1,19 @@
+{
+  "name": "lumencloud",
+  "version": "1.0.0",
+  "description": "**LumenCloud** is a lightweight, self-hosted personal cloud solution developed by [LumenLabs](https://lumenlabs.org).  \r Designed for simplicity and control, it allows users to securely store, manage, and access files through a clean web interface — all hosted on your own infrastructure.",
+  "main": "lumencloud.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "sqlite3": "^5.1.7"
+  }
+}
