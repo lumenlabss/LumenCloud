@@ -23,6 +23,17 @@ db.serialize(() => {
   `);
 });
 
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS files (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    path TEXT NOT NULL,
+    size INTEGER NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_id INTEGER)`);
+});
+
 // Create the admin user if it does not exist
 db.serialize(() => {
   db.get("SELECT * FROM users WHERE username = ?", ["admin"], (err, user) => {

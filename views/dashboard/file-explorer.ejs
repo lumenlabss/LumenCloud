@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>File Explore - LumenCloud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-900 text-white flex min-h-screen">
+    <%- include('../components/sidebar') %>
+    <main class="flex-grow p-8 sm:ml-64 max-w-7xl mx-auto">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">File Explore</h1>
+      </div>
+
+      <section class="">
+        <!--File list-->
+        <div
+          class="bg-gray-800 p-6 rounded-lg shadow-xl col-span-1 md:col-span-2 lg:col-span-1"
+        >
+          <div
+            class="flex items-center justify-between mb-6 border-b border-gray-700 pb-4"
+          >
+            <h2 class="text-2xl font-bold flex items-center gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-indigo-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                />
+              </svg>
+              Files
+            </h2>
+            <input
+              type="text"
+              placeholder="Search files..."
+              class="bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+          <ul class="space-y-4">
+            <% files.forEach(file => { %>
+            <li class="group">
+              <a
+                href="#"
+                class="flex items-center gap-4 p-4 bg-gray-700 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 active:bg-gray-500"
+              >
+                <div
+                  class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-indigo-500 rounded-md text-white group-hover:bg-indigo-400 transition-colors duration-200"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </div>
+                <div class="flex-grow min-w-0">
+                  <p class="text-lg font-medium truncate text-white">
+                    <%= file.name %>
+                  </p>
+                  <p class="text-sm text-gray-400 mt-1"><%= file.size %> KB</p>
+                </div>
+                <div class="flex-shrink-0 text-sm text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </a>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script src="/js/sidebar.js"></script>
+  <script>
+    // Function search files
+    document
+      .querySelector('input[placeholder="Search files..."]')
+      .addEventListener("input", function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const fileItems = document.querySelectorAll("li.group");
+
+        fileItems.forEach((item) => {
+          const fileName = item.querySelector("p").textContent.toLowerCase();
+          if (fileName.includes(searchTerm)) {
+            item.style.display = "";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+  </script>
+</html>

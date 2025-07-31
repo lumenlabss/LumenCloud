@@ -13,6 +13,7 @@ const config = require("./config/config.json");
 
 const authRoutes = require("./src/routes/auth");
 const dashboardRoutes = require("./src/routes/dashboard");
+const fileExploreRoutes = require("./src/routes/file_explore");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use(
 // Routes
 app.use("/", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/file/explore", fileExploreRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
