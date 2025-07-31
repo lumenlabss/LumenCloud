@@ -6,11 +6,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <%- include('../components/sidebar') %>
-  <body class="bg-gray-900 text-white">
-    <div class="flex-grow p-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
+  <body class="bg-gray-900 text-white flex">
+    <%- include('../components/sidebar') %>
+
+    <div class="flex-grow p-8 sm:ml-64">
+      <div class="max-w-7xl">
+        <div class="flex items-center justify-start mb-8">
           <h1 class="text-3xl font-bold">Dashboard</h1>
         </div>
         <h1>Bienvenue dans ton dashboard</h1>
