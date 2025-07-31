@@ -2,7 +2,9 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+
     <title>File Explore - LumenCloud</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
@@ -13,8 +15,7 @@
         <h1 class="text-3xl font-bold mb-2">File Explore</h1>
       </div>
 
-      <section class="">
-        <!--File list-->
+      <section>
         <div
           class="bg-gray-800 p-6 rounded-lg shadow-xl col-span-1 md:col-span-2 lg:col-span-1"
         >
@@ -38,11 +39,19 @@
               </svg>
               Files
             </h2>
-            <input
-              type="text"
-              placeholder="Search files..."
-              class="bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
+
+            <div class="flex items-center gap-4">
+              <input
+                type="text"
+                placeholder="Search files..."
+                class="bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 w-full max-w-xs"
+              />
+              <button
+                class="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+              >
+                Upload
+              </button>
+            </div>
           </div>
           <ul class="space-y-4">
             <% files.forEach(file => { %>
@@ -99,7 +108,9 @@
       </section>
     </main>
   </body>
+
   <script src="/js/sidebar.js"></script>
+
   <script>
     // Function search files
     document
