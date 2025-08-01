@@ -28,10 +28,9 @@ db.serialize(() => {
     CREATE TABLE IF NOT EXISTS files (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    path TEXT NOT NULL,
+    filename TEXT NOT NULL,
     size INTEGER NOT NULL,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_id INTEGER)`);
+    uploaded_at INTEGER NOT NULL)`);
 });
 
 // Create the admin user if it does not exist

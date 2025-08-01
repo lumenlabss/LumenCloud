@@ -31,7 +31,7 @@ Designed for simplicity and control, it allows users to securely store, manage, 
 ```bash
 git clone https://github.com/lumenlabss/LumenCloud.git
 cd LumenCloud
-````
+```
 
 ### 2. Install dependencies
 
@@ -43,20 +43,20 @@ npm install
 
 Create a `config.json` file at the root of the project:
 
-```json
+````json
 {
   "port": 3000,
-  "uploadDir": "/data",
-  "jwtSecret": "your-secret-key",
-}
-```
+  "version": "alpha 1.0.0",
+  "https": false,
+  "sessionSecret": "change_this"
+}```
 
 
 ### 4. Start the server
 
 ```bash
 node lumencloud.js
-```
+````
 
 > 💡 Default password and username is: admin, 123
 
@@ -83,8 +83,8 @@ You are free to use, modify, and distribute it under the terms of this license.
 
 For questions, suggestions, or serious contributions, contact the team via:
 
-* Official website: https://lumenlabs.pro
-* Community Discord: https://discord.gg/ty92ffCYUC
+- Official website: https://lumenlabs.pro
+- Community Discord: https://discord.gg/ty92ffCYUC
 
 ---
 
