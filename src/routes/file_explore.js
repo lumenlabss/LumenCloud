@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// ---  Main path to display files ---
+// ---  Main path to display files ---
 router.get("/", authMiddleware.isAuthenticated, (req, res) => {
   db.all("SELECT * FROM files", [], function (err, rows) {
     if (err) {
@@ -31,8 +31,29 @@ router.get("/", authMiddleware.isAuthenticated, (req, res) => {
       return res.status(500).send("server error");
     }
 
+    // Function to format bytes into a more readable format (KB, MB, GB)
+    const formatFileSize = (bytes) => {
+      if (bytes === 0) return "0 Bytes";
+
+      const k = 1024;
+      const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+      // Return the formatted string, rounded to two decimal places
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+    };
+
+    // Format the size of each file before passing it to the view
+    const filesWithFormattedSize = rows.map((file) => {
+      return {
+        ...file,
+        size: formatFileSize(file.size),
+      };
+    });
+
     res.render("dashboard/file-explorer", {
-      files: rows,
+      files: filesWithFormattedSize,
     });
   });
 });
@@ -94,7 +115,7 @@ router.get("/download/:id", authMiddleware.isAuthenticated, (req, res) => {
   });
 });
 
-// ---  Path for deleting a file ---
+// ---  Path for deleting a file ---
 router.post("/delete/:id", authMiddleware.isAuthenticated, (req, res) => {
   const fileId = req.params.id;
 
