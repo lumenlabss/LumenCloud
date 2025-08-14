@@ -214,6 +214,16 @@
           </p>
         </div>
 
+        <div
+          id="progressBarContainer"
+          class="w-full bg-gray-700 rounded-full h-2.5 mb-4 hidden"
+        >
+          <div
+            id="progressBar"
+            class="bg-indigo-500 h-2.5 rounded-full"
+            style="width: 0%"
+          ></div>
+        </div>
         <div class="relative mb-4">
           <div
             id="fileNameDisplay"
@@ -245,6 +255,7 @@
           </button>
           <button
             type="submit"
+            id="uploadButton"
             class="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-2 px-4 rounded-lg"
           >
             Uploader
@@ -290,9 +301,16 @@
 
   <script>
     // --- Scripts for the upload modal ---
+    const uploadForm = document.getElementById("uploadForm");
     const fileInput = document.getElementById("fileInput");
     const fileNameDisplay = document.getElementById("fileNameDisplay");
+    const uploadModal = document.getElementById("uploadModal");
+    const progressBarContainer = document.getElementById(
+      "progressBarContainer"
+    );
+    const progressBar = document.getElementById("progressBar");
 
+    // Handle file name display when a file is selected
     fileInput.addEventListener("change", () => {
       if (fileInput.files.length > 0) {
         fileNameDisplay.textContent = fileInput.files[0].name;
@@ -302,15 +320,64 @@
       }
     });
 
-    function resetUploadModal() {
+    // Handle the form submission
+    uploadForm.addEventListener("submit", (e) => {
+      e.preventDefault(); // Prevent the default form submission
+
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Please select a file to upload.");
+        return;
+      }
+
+      // Show the progress bar and reset its state
+      progressBarContainer.classList.remove("hidden");
+      progressBar.style.width = "0%";
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const xhr = new XMLHttpRequest();
+
+      // Event listener to track upload progress
+      xhr.upload.addEventListener("progress", (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = (event.loaded / event.total) * 100;
+          progressBar.style.width = `${percentComplete}%`;
+        }
+      });
+
+      // Event listener to handle the end of the upload
+      xhr.addEventListener("load", () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          // Upload is successful
+          setTimeout(() => {
+            closeUploadModal();
+            window.location.reload(); // Reload the page to show the new file
+          }, 500);
+        } else {
+          alert("An error occurred during upload.");
+          closeUploadModal();
+        }
+      });
+
+      // Handle upload errors
+      xhr.addEventListener("error", () => {
+        alert("An error occurred during upload.");
+        closeUploadModal();
+      });
+
+      xhr.open("POST", "/file/explore/upload");
+      xhr.send(formData);
+    });
+
+    // Function to close the upload modal and reset its state
+    function closeUploadModal() {
+      uploadModal.classList.add("hidden");
       fileInput.value = "";
       fileNameDisplay.classList.add("hidden");
-    }
-
-    function closeUploadModal() {
-      const modal = document.getElementById("uploadModal");
-      modal.classList.add("hidden");
-      resetUploadModal();
+      progressBarContainer.classList.add("hidden");
+      progressBar.style.width = "0%";
     }
 
     // --- Scripts for searching files ---
