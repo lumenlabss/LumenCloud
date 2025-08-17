@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const systeminformation = require("systeminformation");
+const fs = require("fs");
+const path = require("path");
 const { isAuthenticated } = require("../middleware/authMiddleware");
 
 router.get("/", isAuthenticated, async (req, res) => {
   try {
+    // Infos disque
     const disks = await systeminformation.fsSize();
-
     const firstDisk = disks[0];
 
     const totalGB = (firstDisk.size / 1024 ** 3).toFixed(2);
@@ -19,6 +21,14 @@ router.get("/", isAuthenticated, async (req, res) => {
       100
     ).toFixed(2);
 
+    // Nombre de fichiers dans /data/files
+    const filesDir = path.join(__dirname, "../../data/files");
+    let totalFiles = 0;
+
+    if (fs.existsSync(filesDir)) {
+      totalFiles = fs.readdirSync(filesDir).length;
+    }
+
     res.render("dashboard/index", {
       userId: req.session.userId,
       diskInfo: {
@@ -28,6 +38,7 @@ router.get("/", isAuthenticated, async (req, res) => {
         usedPercent,
         availablePercent,
       },
+      totalFiles,
     });
   } catch (error) {
     console.error("Disk recovery error:", error);
